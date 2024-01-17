@@ -46,10 +46,13 @@ main:
     movq %rbp, %rsi
     addl $8, %eax
     movl %eax, -8(%rbp)
+    cltq
     movq %rbp, %rdi
-    subl %eax, %edi
+    subq %rax, %rdi
 
-    subl -8(%rbp), %esp
+    movl -8(%rbp), %eax
+    cltq
+    subq %rax, %rsp
 
     movl $0, %ebx
     L0:
@@ -70,7 +73,9 @@ main:
     movq %rax, %rdx
     call printf
 
-    addl -8(%rbp), %esp
+    movl -8(%rbp), %eax
+    cltq
+    addq %rax, %rsp
 
     addq $32, %rsp
     popq %rbp
