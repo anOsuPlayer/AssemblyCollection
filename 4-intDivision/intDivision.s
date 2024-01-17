@@ -5,8 +5,8 @@
 .globl main
 main:
     pushq %rbp
-    subq $96, %rsp
     movq %rsp, %rbp
+    subq $96, %rsp
 
     movq $12, %rax
     movq $5, %rbx
