@@ -7,17 +7,6 @@ D0: .string "%d\n"
 ERR0: .string "invalid word."
 
 .section .text
-.globl editstr
-editstr:
-    pushq %rbp
-    movq %rsp, %rbp
-    subq $32, %rsp
-        
-    movq $0, %rax
-    addq $32, %rsp
-    popq %rbp
-    ret
-
 .globl checkstr
 checkstr:
     pushq %rbp
@@ -64,6 +53,12 @@ main:
     jl E0
 
     movl %eax, -4(%rbp)
+
+    M0:
+        decl -4(%rbp)
+        
+        cmpl $0, -4(%rbp)
+        
 
     leaq R0(%rip), %rcx
     leaq -66(%rbp), %rdx
