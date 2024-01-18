@@ -6,27 +6,12 @@ D0: .string "%d\n"
 
 ERR0: .string "invalid word."
 
-.section .data
-ARR:
-    .byte -1
-    .byte -1
-    .byte -1
-    .byte -1
-
 .section .text
 .globl editstr
 editstr:
     pushq %rbp
     movq %rsp, %rbp
     subq $32, %rsp
-
-    cmpl %edx, %r9d
-    jl EE0
-    movl %r9d, %edi
-    jmp EE1
-    EE0:
-    movl %edx, %edi
-    EE1:
         
     movq $0, %rax
     addq $32, %rsp
@@ -78,11 +63,7 @@ main:
     cmpl $0, %eax
     jl E0
 
-    leaq -66(%rbp), %rcx
-    movl %eax, %edx
-    leaq ARR(%rip), %r8
-    movl $4, %r9d
-    call editstr
+    movl %eax, -4(%rbp)
 
     leaq R0(%rip), %rcx
     leaq -66(%rbp), %rdx
