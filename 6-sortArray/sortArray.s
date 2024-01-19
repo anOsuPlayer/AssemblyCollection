@@ -1,3 +1,5 @@
+// implementation of a simple bubble-sort over a 5 elements array, read from keyboard.
+
 .section .rodata
 S0: .string "%d"
 P0: .string "insert number: "

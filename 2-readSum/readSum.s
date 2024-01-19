@@ -1,48 +1,40 @@
+// reads two numbers and sums them, displaying the result
+
 .section .data
-s0: .string "insert first number: "
-s1: .string "insert second number: "
-s2: .string "the sum is: %d\n"
-s3: .string "%s"
-s4: .string "%d"
+s0: .string "insert two numbers: "
+s1: .string "the sum is: %d\n"
+s3: .string "%d %d"
 
 .section .text
 .globl sum
 sum:
-    addq %rdx, %rcx
-    movq %rcx, %rax
+    addl %edx, %ecx
+    movl %ecx, %eax
     ret
 
 .globl main
 main:
     pushq %rbp
-    subq $32, %rsp
     movq %rsp, %rbp
+    subq $32, %rsp
 
-    leaq s3(%rip), %rcx
-    leaq s0(%rip), %rdx
+    leaq s0(%rip), %rcx
     call printf
 
-    leaq s4(%rip), %rcx
-    leaq -32(%rbp), %rdx
-    call scanf
-
     leaq s3(%rip), %rcx
-    leaq s1(%rip), %rdx
-    call printf
-
-    leaq s4(%rip), %rcx
-    leaq -24(%rbp), %rdx
+    leaq -4(%rbp), %rdx
+    leaq -8(%rbp), %r8
     call scanf
 
-    movq -32(%rbp), %rcx
-    movq -24(%rbp), %rdx
+    movl -4(%rbp), %ecx
+    movl -8(%rbp), %edx
     call sum
 
-    leaq s2(%rip), %rcx
+    leaq s1(%rip), %rcx
     movq %rax, %rdx
     xorq %rax, %rax
     call printf
 
-    popq %rbp
     addq $32, %rsp
+    popq %rbp
     ret

@@ -1,6 +1,7 @@
+// reads and prints a number using printf and scanf.
+
 .section .data
 s0: .string "%d"
-s1: .string "%s"
 s2: .string "write a number: "
 s3: .string "your number: %d\n"
 
@@ -8,19 +9,17 @@ s3: .string "your number: %d\n"
 .globl main
 main:
     pushq %rbp
-    subq $32, %rsp
     movq %rsp, %rbp
+    subq $32, %rsp
 
-    leaq s1(%rip), %rcx
-    leaq s2(%rip), %rdx
+    leaq s2(%rip), %rcx
     call printf
-
     leaq s0(%rip), %rcx
-    leaq (%rbp), %rdx
+    leaq -4(%rbp), %rdx
     call scanf
 
     leaq s3(%rip), %rcx
-    movq (%rbp), %rdx
+    movl -4(%rbp), %edx
     call printf
 
     popq %rbp

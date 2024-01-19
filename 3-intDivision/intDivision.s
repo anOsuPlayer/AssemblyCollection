@@ -1,3 +1,5 @@
+// simple integral signed division (idivq), displaying both the quotient and the remainder.
+
 .section .data
 .P0: .string "%d : %d\n"
 

@@ -1,12 +1,35 @@
+// computes the sum of a variable-sized array and displays it.
+
 .section .data
 S0: .string "%d"
 
-D0: .string "%d\n"
-
 P0: .string "input array length: "
-P1: .string "input number: "
+P1: .string "insert number: "
+P2: .string "the sum of all elements is: %lld"
 
 .section .text
+.globl sumArr
+sumArr:
+pushq %rbp
+movq %rsp, %rbp
+subq $32, %rsp
+
+movq $0, -8(%rbp)
+movl %edx, %edi
+movq $0, %rbx
+L1:
+    movl (%rcx, %rbx, 4), %eax
+    cltq
+    addq %rax, -8(%rbp)
+    incl %ebx
+    cmpl %ebx, %edi
+    jnz L1
+
+movq -8(%rbp), %rax
+addq $32, %rsp
+popq %rbp
+ret
+
 .globl main
 main:
     pushq %rbp
@@ -44,11 +67,18 @@ main:
         cmpl %ebx, -4(%rbp)
         jnz L0
 
+    movq %rdi, %rcx
+    movl -4(%rbp), %edx
+    call sumArr
+
+    leaq P2(%rip), %rcx
+    movq %rax, %rdx
+    call printf
+
     movl -8(%rbp), %eax
     cltq
     addq %rax, %rsp
 
-    movq $0, %rax
     addq $32, %rsp
     popq %rbp
     ret

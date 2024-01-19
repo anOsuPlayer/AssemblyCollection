@@ -1,3 +1,6 @@
+// from any 4-digits number (made by at least two different digits), computes and displays the steps to
+// reach the Kaprekar's constant
+
 .section .rodata
 kconst: .long 6174
 
