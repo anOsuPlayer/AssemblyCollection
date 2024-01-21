@@ -5,23 +5,40 @@
 P0: .string "input string: "
 P1: .string "output number: %d"
 R0: .string "%s"
-D0: .string "%c"
+D0: .string "%d"
 
-MAX: 0x7fffffff
-MIN: 0xffffffff
+MAX: .long 0x7fffffff
+MIN: .long 0xffffffff
 
 .section .data
 N: .quad 0
 buf: .zero 100
+.align 16
+dig: .zero 20
 
 .section .text
 .globl isValid
 isValid:
-    
+    pushq %rbp
+    movq %rsp, %rbp
+    subq $48, %rsp
+
+
+    addq $48, %rsp
+    popq %rbp
+    ret
 
 .globl myAtoi
 myAtoi:
+    pushq %rbp
+    movq %rsp, %rbp
+    subq $48, %rsp
+
     
+
+    addq $48, %rsp
+    popq %rbp
+    ret
 
 .globl main
 main:
