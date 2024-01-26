@@ -1,4 +1,4 @@
-# Assembly
+# Assembly Collection
 A collection of various mini-projects coded in x86-64 GAS/AT&T Assembly.
 
 There is no specific topic which these snippets follow strictly: it's just a _collection_ containing various experiments with Assembly code in hope to help someone trying to approach to this infamous language. 
