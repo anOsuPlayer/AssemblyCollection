@@ -23,38 +23,38 @@ main:
     leaq P0(%rip), %rcx
     call printf
     leaq R0(%rip), %rcx
-    leaq -8(%rbp), %rdx
+    leaq K(%rip), %rdx
     call scanf
 
     leaq P1(%rip), %rcx
     call printf
     leaq R1(%rip), %rcx
-    leaq -12(%rbp), %rdx
+    leaq -4(%rbp), %rdx
     call scanf
 
-    movq -12(%rbp), %rax
+    movq -4(%rbp), %rax
     movq $4, %rbx
     mulq %rbx
     movq %rax, %rcx
     call malloc
-    movq %rax, -20(%rbp)
+    movq %rax, -12(%rbp)
 
-    movl $0, -24(%rbp)
-    movq -20(%rbp), %rdi
+    movl $0, -16(%rbp)
+    movq -12(%rbp), %rsi
     L0:
         leaq P2(%rip), %rcx
         call printf
         leaq R1(%rip), %rcx
-        movq -24(%rbp), %rax
-        leaq (%rdi, %rax, 4), %rdx
+        movq -16(%rbp), %rax
+        leaq (%rsi, %rax, 4), %rdx
         call scanf
 
-        incl -24(%rbp)
-        movl -12(%rbp), %eax
-        cmpl -24(%rbp), %eax
+        incl -16(%rbp)
+        movl -4(%rbp), %eax
+        cmpl -16(%rbp), %eax
         jg L0
 
-    movq -20(%rbp), %rcx
+    movq -12(%rbp), %rcx
     call free
 
     addq $72, %rsp
