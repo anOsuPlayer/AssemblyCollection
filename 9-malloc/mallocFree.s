@@ -1,3 +1,5 @@
+// allocates an array and reads it using malloc() and free()
+
 .section .rodata
 P0: .string "insert array length: "
 P1: .string "insert array element: "
@@ -38,7 +40,7 @@ main:
         leaq P1(%rip), %rcx
         call printf
         leaq R0(%rip), %rcx
-        leaq -20(%rbp), %rdx
+        movq -20(%rbp), %rdx
         call scanf
 
         addq $4, -20(%rbp)
@@ -47,11 +49,10 @@ main:
         cmpl $0, %r12d
         jg L0
 
-
     leaq P2(%rip), %rcx
     call printf
     movq -12(%rbp), %rbx
-    movq $0, %r12
+    movl $0, %r12d
     L1:
         leaq R1(%rip), %rcx
         movl (%rbx), %edx
