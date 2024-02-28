@@ -38,16 +38,6 @@ compute:
     subsd %xmm0, %xmm3
     movsd %xmm3, -8(%rbp)
 
-    // check for negative result
-    ucomisd zero(%rip), %xmm3
-    jle C1
-        movq retCode(%rip), %xmm3
-        jmp CE
-    C1:
-
-    // handling both -b and +b solutions
-    movsd %xmm3, -16(%rbp)
-
     movsd zero(%rip), %xmm3
     CE:
     addq $48, %rsp
@@ -85,24 +75,23 @@ main:
     call compute
 
     ucomisd retCode(%rip), %xmm3
-    jne L1
+    jne L0
         leaq res3(%rip), %rcx
         call printf
         jmp LE
-    L1:
+    L0:
     ucomisd %xmm1, %xmm2
-    jne L0
+    jne L1
         leaq res2(%rip), %rcx
         movq %xmm1, %rdx
         call printf
-    jmp LE
-    L0:
+        jmp LE
+    L1:
         leaq res(%rip), %rcx
         movq %xmm1, %rdx
         movq %xmm2, %r8
         call printf
     LE:
-
     addq $64, %rsp
     popq %rbp
     ret
