@@ -38,6 +38,22 @@ compute:
     subsd %xmm0, %xmm3
     movsd %xmm3, -8(%rbp)
 
+    // check for negative result
+    ucomisd zero(%rip), %xmm3
+    ja C1
+        movsd retCode(%rip), %xmm3
+        jmp CE
+    C1:
+
+    // square root result
+    fldl -8(%rbp)
+    fsqrt
+    fstpl -16(%rbp)
+
+    leaq r0(%rip), %rcx
+    movq -16(%rbp), %rdx 
+    call printf
+
     movsd zero(%rip), %xmm3
     CE:
     addq $48, %rsp
