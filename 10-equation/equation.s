@@ -40,20 +40,43 @@ compute:
 
     // check for negative result
     ucomisd zero(%rip), %xmm3
-    ja C1
+    jae C1
         movsd retCode(%rip), %xmm3
         jmp CE
     C1:
 
-    // square root result
+    // square root
     fldl -8(%rbp)
     fsqrt
-    fstpl -16(%rbp)
+    fstpl -8(%rbp)
 
-    leaq r0(%rip), %rcx
-    movq -16(%rbp), %rdx 
-    call printf
+    // duplicate solution
+    movsd -8(%rbp), %xmm0
+    movsd %xmm0, -16(%rbp)
 
+    // negate "b"
+    movsd retCode(%rip), %xmm0
+    mulsd %xmm0, %xmm2
+
+    // compute "2*a"
+    movsd m(%rip), %xmm0
+    mulsd %xmm0, %xmm1
+
+    // compute "-b + delta", divide by "2*a"
+    movsd -8(%rbp), %xmm0
+    addsd %xmm2, %xmm0
+    divsd %xmm1, %xmm0
+    movsd %xmm0, -8(%rbp)
+
+    // compute "-b - delta", divide by "2*a"
+    movsd retCode(%rip), %xmm0
+    movsd -16(%rbp), %xmm3
+    mulsd %xmm0, %xmm3
+    divsd %xmm1, %xmm3
+    movsd %xmm3, -16(%rbp)
+    
+    movsd -8(%rbp), %xmm1
+    movsd -16(%rbp), %xmm2
     movsd zero(%rip), %xmm3
     CE:
     addq $48, %rsp
