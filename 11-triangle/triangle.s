@@ -1,4 +1,4 @@
-// prints on the console a triangle of arbitrary long base
+// prints on the console a triangle of arbitrary chosen height
 
 .section .rodata
 S0: .string "%d"
@@ -28,25 +28,18 @@ main:
     movl %eax, -4(%rbp)
 
     movl %eax, -8(%rbp)
+    movl $0, %esi
     L0:
-        movl -4(%rbp), %eax
-        subl -8(%rbp), %eax
-        subl $1, %eax
-        movl $2, %ebx
-        xorq %rdx, %rdx
-        idivl %ebx
-        movl %eax, -12(%rbp)
+        movl $0, -12(%rbp)
         L1:
-            cmpl $0, %eax
-            jne LE
             leaq S2(%rip), %rcx
             call printf
-            decl -12(%rbp)
-            movl -12(%rbp), %eax
-            jmp L1
-        LE:            
-        
+            incl -12(%rbp)
+            cmpl %esi, -12(%rbp)
+            jle L1
         movl $0, -12(%rbp)
+        incl %esi
+
         L2:
             leaq S1(%rip), %rcx
             call printf
